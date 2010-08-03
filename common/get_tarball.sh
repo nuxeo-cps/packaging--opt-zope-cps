@@ -4,7 +4,7 @@ mkdir -p tarballs
 cd tarballs
 
 # retrieval
-cps_version=3.5.1-rc2
+cps_version=`cat common/CPS-VERSION`
 tarball_name=CPS-Standard-$cps_version.tgz
 
 url=http://download.cps-cms.org/CPS-$cps_version/$tarball_name

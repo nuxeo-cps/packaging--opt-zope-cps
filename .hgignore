@@ -5,3 +5,4 @@ tarballs
 *~
 *.deb
 *.rpm
+opt/*

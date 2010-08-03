@@ -1,0 +1,10 @@
+Package: opt-zope-cps-3.5.1
+Version: 3.5.1+rc2
+Section: web
+Priority: optional
+Architecture: all
+Essential: no
+Installed-Size: 84900
+Maintainer: Georges Racinet <georges@racinet.fr>
+Description: The standard set of CPS products
+
