@@ -1,14 +1,14 @@
 #!/bin/sh
 
+cps_version=`cat common/CPS-VERSION`
 mkdir -p tarballs
 cd tarballs
 
 # retrieval
-cps_version=`cat common/CPS-VERSION`
 tarball_name=CPS-Standard-$cps_version.tgz
 
 url=http://download.cps-cms.org/CPS-$cps_version/$tarball_name
-#wget $url
+wget $url
 wget $url.sig
 wget $url.md5
 
