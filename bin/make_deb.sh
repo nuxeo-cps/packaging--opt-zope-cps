@@ -4,7 +4,9 @@ start_wd=$PWD
 deb_dir=$1
 cps_version=`cat common/CPS-VERSION`
 
+# preparations
 mkdir -p $deb_dir/opt $deb_dir/etc/opt/cps-3.5
+find $deb_dir/DEBIAN -type f -executable | xargs chmod 555
 
 cd $deb_dir/opt
 echo Unpacking the tarball
