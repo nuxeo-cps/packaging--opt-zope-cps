@@ -4,9 +4,24 @@ start_wd=$PWD
 deb_dir=$1
 cps_version=`cat common/CPS-VERSION`
 
-mkdir -p $deb_dir/opt
+mkdir -p $deb_dir/opt $deb_dir/etc/opt/cps-3.5
 
 cd $deb_dir/opt
+echo Unpacking the tarball
 tar xzf $start_wd/tarballs/CPS-Standard-$cps_version.tgz
+mv CPS-Standard-$cps_version cps-3.5
+# 3.5.1-rc2 specific
+cp $start_wd/common/makecpssite.py cps-3.5/CPSDefault/jobs
+
+echo Byte-compiling
 python2.4 $start_wd/common/compilezpy.py > /dev/null
-cp -r $start_wd/zope-instance_skel $deb_dir/etc/opt/cps-3.5/skel
+echo Copying the instance skeleton
+cd $start_wd
+cp -r $start_wd/common/zope_instance_skel $deb_dir/etc/opt/cps-3.5/zope-skel
+echo Producing the .deb
+
+chmod -R a+r $deb_dir
+sudo chown -R root:root $deb_dir/*
+mkdir -p packages/$1
+sudo dpkg -b $deb_dir packages/$1/opt-zope-cps-3.5_3.5.1+rc2_all.deb
+
