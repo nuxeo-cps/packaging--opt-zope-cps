@@ -1,5 +1,5 @@
-#!/usr/bin/python2.4
-# (C) Copyright 2010 Georges Racinet <georges@racinet.fr>
+#!/usr/bin/env python
+# Copyright (c) 2010 Georges Racinet <http://www.racinet.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -14,37 +14,33 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
+#
+# $Id$
+"""Direct executable to make a cps site.
+
+This script relies on the knowledge of the Zope home,
+that's why it can't directly be distributed with CPS itself
+"""
+ZOPE_HOME = '/opt/Zope-2.9'
+CPS_HOME = '/opt/cps-3.5'
+ZOPE_CPS_SKEL = '/etc/opt/cps-3.5/zope-skel'
+SITE_CREATE_JOB = 'Products/CPSDefault/jobs/makecpssite.py'
 
 import os
-ZOPE_HOME = '/opt/Zope-2.9/bin'
-CPS_ETC = '/etc/opt/cps-3.5'
-MAKESITE_JOB = 'Products/CPSDefault/jobs/makecpssite.py'
-
 from optparse import OptionParser
-parser = OptParser(usage = "usage: %prog [options] <dir>\n where <dir> is "
-                   "the path to the new Zope/CPS instance")
+parser = OptionParser(usage="%prog [options] <target directory>")
+parser.add_option('-u', '--zope-user_and_pwd', dest="user_and_pwd",
+                 default='admin:admin',
+                 help="Zope toplevel initial user and password (<name>:<pwd>)")
 
-parser.add_option('-u', '--zope-user-and-password', dest='user_and_password',
-			default='admin:admin',
-			help="The Zope toplevel administrator name"
-                             "and password (<user>:<password>)")
+options, args = parser.parse_args()
+if len(args) != 1:
+    parser.error("Wrong number or arguments")
+instance_home = args[0]
 
-parser.add_option('-d', '--directory, ', dest='user_and_password',
-			default='admin:admin',
-			help="The Zope toplevel administrator name"
-                             "and password (<user>:<password>)")
-
-options, arguments = parser.parse_args()
-if len(arguments) != 1:
-    parser.error("Please provide target directory for the Zope/CPS instance")
-
-instance_home = arguments[0]
-
-os.system('%s/mkzopeinstance.py -d %s -u %s -s %s/zope-skel' % (
-    ZOPE_HOME, instance_home, user_and_passwd, CPS_ETC))
-user_id, _ = user_and_password.split(':')
-
+os.system('%s/bin/mkzopeinstance.py -d %s -u %s -s %s' % (
+    ZOPE_HOME, instance_home, options.user_and_pwd, ZOPE_CPS_SKEL))
+user_id, _ = options.user_and_pwd.split(':')
+os.system('ln -s %s %s/Products' % (CPS_HOME, instance_home))
 os.system('%s/bin/zopectl run %s/%s -u %s cps' % (
-    instance_home, MAKESITE_JOB, user_id))
-
-
+    instance_home, instance_home, SITE_CREATE_JOB, user_id))
