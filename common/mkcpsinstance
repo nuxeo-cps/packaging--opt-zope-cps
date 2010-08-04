@@ -1,0 +1,50 @@
+#!/usr/bin/python2.4
+# (C) Copyright 2010 Georges Racinet <georges@racinet.fr>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+
+import os
+ZOPE_HOME = '/opt/Zope-2.9/bin'
+CPS_ETC = '/etc/opt/cps-3.5'
+MAKESITE_JOB = 'Products/CPSDefault/jobs/makecpssite.py'
+
+from optparse import OptionParser
+parser = OptParser(usage = "usage: %prog [options] <dir>\n where <dir> is "
+                   "the path to the new Zope/CPS instance")
+
+parser.add_option('-u', '--zope-user-and-password', dest='user_and_password',
+			default='admin:admin',
+			help="The Zope toplevel administrator name"
+                             "and password (<user>:<password>)")
+
+parser.add_option('-d', '--directory, ', dest='user_and_password',
+			default='admin:admin',
+			help="The Zope toplevel administrator name"
+                             "and password (<user>:<password>)")
+
+options, arguments = parser.parse_args()
+if len(arguments) != 1:
+    parser.error("Please provide target directory for the Zope/CPS instance")
+
+instance_home = arguments[0]
+
+os.system('%s/mkzopeinstance.py -d %s -u %s -s %s/zope-skel' % (
+    ZOPE_HOME, instance_home, user_and_passwd, CPS_ETC))
+user_id, _ = user_and_password.split(':')
+
+os.system('%s/bin/zopectl run %s/%s -u %s cps' % (
+    instance_home, MAKESITE_JOB, user_id))
+
+
