@@ -3,6 +3,7 @@
 start_wd=$PWD
 deb_dir=$1
 cps_version=`cat common/CPS-VERSION`
+deb_version=`grep Version $deb_dir/DEBIAN/control | sed -e "s/.*[ ]//g"`
 
 # preparations
 mkdir -p $deb_dir/opt $deb_dir/etc/opt/cps-3.5
@@ -20,10 +21,11 @@ python2.4 $start_wd/common/compilezpy.py > /dev/null
 echo Copying the instance skeleton
 cd $start_wd
 cp -r $start_wd/common/zope_instance_skel $deb_dir/etc/opt/cps-3.5/zope-skel
-echo Producing the .deb
+
+echo "Producing the .deb (version $deb_version)"
 
 chmod -R a+r $deb_dir
 sudo chown -R root:root $deb_dir/*
 mkdir -p packages/$1
-sudo dpkg -b $deb_dir packages/$1/opt-zope-cps-3.5_3.5.1+rc2_all.deb
+sudo dpkg -b $deb_dir packages/$1/opt-zope-cps-3.5_${deb_version}_all.deb
 
