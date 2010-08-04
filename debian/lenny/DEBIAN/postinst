@@ -11,6 +11,7 @@ case "$1" in
   configure)
     if [ -d $INSTANCE ]; then
 	echo "Nothing to configure (found existing instance)"
+	exit 0
     fi
     echo Creating Zope/CPS instance at $INSTANCE
     $CPS_HOME/bin/mkcpsinstance --posix-owner=$ZUSER -u admin:admin $INSTANCE

@@ -46,6 +46,6 @@ os.system('%s/bin/mkzopeinstance.py -d %s -u %s -s %s' % (
 if options.posix_owner:
     os.system('chown -R %s %s' % (options.posix_owner, instance_home))
 user_id, _ = options.user_and_pwd.split(':')
-os.system('ln -s %s %s/Products' % (CPS_HOME, instance_home))
+os.system('ln -s %s/Products %s' % (CPS_HOME, instance_home))
 os.system('%s/bin/zopectl run %s/%s -u %s cps' % (
     instance_home, instance_home, SITE_CREATE_JOB, user_id))
