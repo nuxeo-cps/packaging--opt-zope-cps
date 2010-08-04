@@ -20,5 +20,7 @@ bin/build.sh             builds everything (calls sudo)
 bin/get_tarball.sh       retrieve the current CPS tarball
 bin/make_deb.sh <dir>    create the .deb for skeleton at <dir> (calls sudo)
                          example: bin/make_deb.sh debian/lenny
+bin/clean.sh <dir>       cleans intermediate files generated during the
+                         release process for <dir>
 
 
