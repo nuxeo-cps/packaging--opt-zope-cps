@@ -14,12 +14,20 @@ user_grp=`id -g`
 
 # preparations
 mkdir -p $deb_dir/opt $deb_dir/etc/opt/cps-3.5
-find $deb_dir/DEBIAN -type f -executable | xargs chmod 555
+find $deb_dir/DEBIAN -type f -executable | xargs chmod 755
 
 cd $deb_dir/opt
 echo Unpacking the tarball
 tar xzf $start_wd/tarballs/CPS-Standard-$cps_version.tgz
 mv CPS-Standard-$cps_version cps-3.5
+
+# instance creation script (cannot be in the product itself, because
+# has to know where to find mkzopeinstance.py, and that's installation
+# dependent
+mkdir cps-3.5/bin
+cp $start_wd/common/mkcpsinstance cps-3.5/bin
+chmod 755 cps-3.5/bin/mkcpsinstance
+
 # 3.5.1-rc2 specific
 cp $start_wd/common/makecpssite.py cps-3.5/CPSDefault/jobs
 

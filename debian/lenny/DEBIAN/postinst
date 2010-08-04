@@ -1,7 +1,7 @@
 #!/bin/sh
 ZUSER=zope:zope
 INSTANCE=/var/opt/cps-3.5/test-instance
-SKEL=/etc/opt/cps-3.5/zope-skel
+CPS_HOME=/opt/cps-3.5
 
 case "$1" in
   abort-deconfigure|abort-upgrade)
@@ -12,12 +12,8 @@ case "$1" in
     if [ -d $INSTANCE ]; then
 	echo "Nothing to configure (found existing instance)"
     fi
-    echo Creating Zope instance at $INSTANCE
-    # TODO let operator choose user/pwd combinations
-    /opt/Zope-2.9/bin/mkzopeinstance.py -d $INSTANCE -u admin:admin -s $SKEL
-    ln -s /opt/cps-3.5 $INSTANCE/Products
-    chown -R $ZUSER $INSTANCE
-    $INSTANCE/bin/zopectl run $INSTANCE/Products/CPSDefault/jobs/makecpssite.py -u admin cps
+    echo Creating Zope/CPS instance at $INSTANCE
+    $CPS_HOME/bin/mkcpsinstance --posix-owner=$ZUSER -u admin:admin $INSTANCE
     ;;
 
   *)
