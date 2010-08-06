@@ -131,7 +131,7 @@ instancehome $INSTANCE
 #
 # Example:
 #
-#    debug-mode on
+    debug-mode on
 
 
 # Directive: effective-user
