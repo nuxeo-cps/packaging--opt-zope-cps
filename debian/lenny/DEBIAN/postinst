@@ -11,7 +11,10 @@ case "$1" in
   ;;
   configure)
     if [ -d $INSTANCE ]; then
-	echo "Nothing to configure (found existing instance)"
+	echo "Found existing instance at $INSTANCE"
+	upscript=$INSTANCE/bin/deb_upgrade
+	echo "Upgrading via $upscript"
+	exec $upscript $2
     else
         echo Creating Zope/CPS instance at $INSTANCE
         $CPS_HOME/bin/mkcpsinstance --posix-owner=$ZUSER -u admin:admin $INSTANCE

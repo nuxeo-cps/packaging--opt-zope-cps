@@ -29,6 +29,7 @@ chmod 755 bin/mkcpsinstance
 
 # 3.5.1-rc2 specific
 cp $start_wd/common/makecpssite.py Products/CPSDefault/jobs
+cp $start_wd/common/fullupgrade.py Products/CPSDefault/jobs
 
 echo Byte-compiling
 python2.4 $start_wd/common/compilezpy.py > /dev/null
