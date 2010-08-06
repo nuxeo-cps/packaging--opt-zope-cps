@@ -47,4 +47,4 @@ if options.posix_owner:
     os.system('chown -R %s %s' % (options.posix_owner, instance_home))
 user_id, _ = options.user_and_pwd.split(':')
 os.system('%s/bin/zopectl run %s/%s -u %s cps' % (
-    instance_home, instance_home, SITE_CREATE_JOB, user_id))
+    instance_home, CPS_HOME, SITE_CREATE_JOB, user_id))
