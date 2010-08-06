@@ -1,7 +1,8 @@
 #!/bin/sh
 ZUSER=zope:zope
-INSTANCE=/var/opt/cps-3.5/test-instance
 CPS_HOME=/opt/cps-3.5
+INSTANCE=/var/opt/cps-3.5/test-instance
+RC_SCRIPT=zope-cps-test
 
 case "$1" in
   abort-deconfigure|abort-upgrade)
@@ -11,10 +12,17 @@ case "$1" in
   configure)
     if [ -d $INSTANCE ]; then
 	echo "Nothing to configure (found existing instance)"
-	exit 0
+    else
+        echo Creating Zope/CPS instance at $INSTANCE
+        $CPS_HOME/bin/mkcpsinstance --posix-owner=$ZUSER -u admin:admin $INSTANCE
+
+        echo Setting up startup script
+        ln -s $INSTANCE/bin/zopectl /etc/init.d/zope-cps-test
+        update-rc.d -f zope-cps-test start 92 2 3 4 5 . stop 92 0 1 6 .
     fi
-    echo Creating Zope/CPS instance at $INSTANCE
-    $CPS_HOME/bin/mkcpsinstance --posix-owner=$ZUSER -u admin:admin $INSTANCE
+    echo "Starting Zope/CPS test instance (listens on port 6500)"
+    /etc/init.d/zope-cps-test start
+
     ;;
 
   *)
