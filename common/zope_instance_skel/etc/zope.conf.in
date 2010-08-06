@@ -89,8 +89,8 @@ instancehome $INSTANCE
 #
 # Example:
 #
-#    products /home/chrism/projects/myproducts
-
+    products /opt/cps-3.5/Products
+    products $INSTANCE/Products
 
 # Directive: environment
 #
