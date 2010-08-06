@@ -1,14 +1,14 @@
 #!/bin/sh
-ZUSER=zope:zope
-CPS_HOME=/opt/cps-3.5
-INSTANCE=/var/opt/cps-3.5/test-instance
 RC_SCRIPT=zope-cps-test
 
 case "$1" in
   failed-upgrade)
   ;;
   upgrade|remove|deconfigure)
-     /etc/init.d/zope-cps-test stop
+     script=/etc/init.d/$RC_SCRIPT
+     if [ -f $script ]; then
+       exec $script stop
+     fi
   ;;
   *)
     echo "prerm called with unknown argument \`$1'" >&2
