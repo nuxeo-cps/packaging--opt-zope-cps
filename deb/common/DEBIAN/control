@@ -6,7 +6,7 @@ Priority: optional
 Architecture: all
 Essential: no
 Conflicts: opt-zope-cps-3.5-instance
-Installed-Size: 84900
+Installed-Size: 68612
 Maintainer: Georges Racinet <georges@racinet.fr>
 Homepage: http://cps-cms.org
 Description: The standard set of CPS products
