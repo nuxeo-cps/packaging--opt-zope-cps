@@ -41,7 +41,7 @@ echo "Producing the .deb (version $deb_version)"
 chmod -R a+r $deb_dir
 sudo chown -R root:root $deb_dir/*
 mkdir -p packages/$1
-sudo dpkg -b $deb_dir packages/$1
+sudo dpkg -b $deb_dir packages/$1/current.deb
 
 # getting back to normal ownership so that cleaning does not mean
 # playing with rm -r as root

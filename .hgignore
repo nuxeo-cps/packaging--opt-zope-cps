@@ -7,3 +7,4 @@ packages
 *.deb
 *.rpm
 opt/*
+repos/deb
