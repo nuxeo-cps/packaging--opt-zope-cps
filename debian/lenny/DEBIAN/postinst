@@ -19,6 +19,7 @@ case "$1" in
         echo Creating Zope/CPS instance at $INSTANCE
         $CPS_HOME/bin/mkcpsinstance --posix-owner=$ZUSER -u admin:admin $INSTANCE
 
+	ln -s $CPS_HOME/Products/CPSDefault/themes $INSTANCE/cps-themes
         echo Setting up startup script
         ln -s $INSTANCE/bin/zopectl /etc/init.d/zope-cps-test
         update-rc.d -f zope-cps-test start 92 2 3 4 5 . stop 92 0 1 6 .

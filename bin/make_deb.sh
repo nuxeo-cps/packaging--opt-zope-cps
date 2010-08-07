@@ -31,7 +31,7 @@ chmod 755 bin/mkcpsinstance
 cp $start_wd/common/makecpssite.py Products/CPSDefault/jobs
 cp $start_wd/common/fullupgrade.py Products/CPSDefault/jobs
 
-echo Byte-compiling
+echo Byte-compiling TODO make this in postint for correct paths in tracebacks
 python2.4 $start_wd/common/compilezpy.py > /dev/null
 echo Copying the instance skeleton
 cd $start_wd

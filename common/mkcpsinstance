@@ -29,6 +29,10 @@ SITE_CREATE_JOB = 'Products/CPSDefault/jobs/makecpssite.py'
 import os
 from optparse import OptionParser
 parser = OptionParser(usage="%prog [options] <target directory>")
+parser.add_option('-t', '--root-themes-container',
+                  dest='themes', default='cps-themes',
+                  help="Path from the instance home to the root "
+                  "themes container.")
 parser.add_option('-u', '--zope-user_and_pwd', dest="user_and_pwd",
                  default='admin:admin',
                  help="Zope toplevel initial user and password (<name>:<pwd>)")
@@ -46,5 +50,5 @@ os.system('%s/bin/mkzopeinstance.py -d %s -u %s -s %s' % (
 if options.posix_owner:
     os.system('chown -R %s %s' % (options.posix_owner, instance_home))
 user_id, _ = options.user_and_pwd.split(':')
-os.system('%s/bin/zopectl run %s/%s -u %s cps' % (
-    instance_home, CPS_HOME, SITE_CREATE_JOB, user_id))
+os.system('%s/bin/zopectl run %s/%s -u %s -t %s cps' % (
+    instance_home, CPS_HOME, SITE_CREATE_JOB, user_id, options.themes))
