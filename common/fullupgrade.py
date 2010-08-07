@@ -43,10 +43,10 @@ def main():
     optparser.add_option('--debian-version-scheme', dest='debian_versions',
                          action='store_true',
                          help="use debian package version scheme")
-    portal, options, args = cpsjob.bootstrap(app)
+    portal, options, arguments = cpsjob.bootstrap(app)
 
-    if args:
-        from_version = args[1]
+    if arguments:
+        from_version = arguments[0]
         logger.info("Starting upgrades from version %s", from_version)
     else:
         from_version = ''
