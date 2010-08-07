@@ -1,20 +1,18 @@
-This repository holds the files used to generate packages for various
-operating systems. It must stay light.
-
-One should be able to regenerate packages simply by using hg up and
-at most correcting some download URLs.
+This directory for the opt-zope-cps-3.5 packages
 
 Directories
 -----------
 
 bin/                     packaging scripts
 common/                  resources that are shared among different distros
-debian/xxx               .deb skeleton for debian version xxx
-ubuntu/xxx               .deb skeleton for ubuntu version xxx
+deb/                     deb package skeletons
+deb/common               the common deb package skeleton to spawn most variants
+
 
 Commands
 --------
-All commands are meant to be launched from the repository root
+All commands are meant to be launched from the directory where this
+README lies:
 
 bin/build.sh             builds everything (calls sudo)
 bin/get_tarball.sh       retrieve the current CPS tarball
