@@ -21,12 +21,14 @@
 This script relies on the knowledge of the Zope home,
 that's why it can't directly be distributed with CPS itself
 """
-ZOPE_HOME = '/opt/Zope-2.9.12'
-HGBUNDLER = '/opt/hgbundler/bin/hgbundler'
-ZOPE_CPS_SKEL = '/tmp/zope-dev-skel'
+import os
+
+ZOPE_HOME = '/opt/Zope-2.9'
+HGBUNDLER_PATH = os.environ['PATH'].split(':')
+HGBUNDLER_PATH.append('/opt/hgbundler/bin')
+ZOPE_CPS_SKEL = '/etc/opt/cps-3.5/zope-dev-skel'
 SITE_CREATE_JOB = 'Products/CPSDefault/jobs/makecpssite.py'
 
-import os
 from optparse import OptionParser
 parser = OptionParser(usage="%prog [options] <target directory>")
 parser.add_option('-b', '--bundle-url', dest="bundle_url",
@@ -58,16 +60,25 @@ user_id, _ = options.user_and_pwd.split(':')
 url = options.bundle_url
 split = url.split('?subpath=', 1)
 products_dir = instance_home + '/Products'
+
+for p in HGBUNDLER_PATH:
+    hgbundler = os.path.join(p, 'hgbundler')
+    if os.access(hgbundler, os.X_OK and os.R_OK):
+        break
+else:
+    raise RuntimeError("Could not find hgbundler on the path nor in /opt")
+
+
 if len(split) == 2:
     subpath = split[1]
     url = split[0]
-#    os.system('hg clone %s %s/bundle' % (url, instance_home))
-#    os.system('ln -s bundle/%s %s' % (subpath, products_dir))
+    os.system('hg clone %s %s/bundle' % (url, instance_home))
+    os.system('ln -s bundle/%s %s' % (subpath, products_dir))
 else:
     subpath = ''
-#    os.system('hg clone %s %s/Products' % (url, instance_home))
+    os.system('hg clone %s %s/Products' % (url, instance_home))
 
-#os.system('%s --bundle-dir=%s make-clones' % (HGBUNDLER, products_dir))
+os.system('%s --bundle-dir=%s make-clones' % (hgbundler, products_dir))
 
 cmd = '%s/bin/zopectl run %s/%s -u %s cps ' % (
     instance_home, instance_home, SITE_CREATE_JOB, user_id)
