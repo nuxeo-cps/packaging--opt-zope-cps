@@ -31,12 +31,13 @@ SITE_CREATE_JOB = 'Products/CPSDefault/jobs/makecpssite.py'
 
 from optparse import OptionParser
 parser = OptionParser(usage="%prog [options] <target directory>")
+default_bundle = 'https://hg.cps-cms.org/CPS/bundles?subpath=CPS-3-full'
 parser.add_option('-b', '--bundle-url', dest="bundle_url",
                   default='https://hg.cps-cms.org/CPS/bundles?subpath=CPS-3-full',
-                  help="Remote bundle repo url. Use subpath argument to "
-                  "specify that the bundle is a subdirectory")
+                  help=("Remote bundle repo url. Use subpath argument to "
+                  "specify that the bundle is a subdirectory. Defaults to %r") % default)
 parser.add_option('-t', '--root-themes-container',
-                  dest='themes', default='',
+                  dest='themes', default='Products/CPSDefault/themes',
                   help="Path from the instance home to the root "
                   "themes container.")
 parser.add_option('-u', '--zope-user_and_pwd', dest="user_and_pwd",
@@ -85,3 +86,5 @@ cmd = '%s/bin/zopectl run %s/%s -u %s cps ' % (
 if options.themes:
     cmd += '-t %s' % options.themes
 os.system(cmd)
+
+print "Instance at %s ready to be started" % instance_home

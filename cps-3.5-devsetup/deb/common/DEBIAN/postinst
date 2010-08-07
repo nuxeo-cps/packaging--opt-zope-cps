@@ -10,7 +10,7 @@ case "$1" in
   abort-remove)
   ;;
   configure)
-    echo "Use /opt/cps-3.5/bin/mkcpsdevinstance"
+    echo "Now do '/opt/cps-3.5/bin/mkcpsdevinstance --help' to get started."
     ;;
 
   *)
