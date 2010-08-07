@@ -145,7 +145,7 @@ instancehome $INSTANCE
 #
 # Example:
 #
-    effective-user zope
+#    effective-user zope
 
 
 # Directive: enable-product-installation
@@ -555,8 +555,8 @@ instancehome $INSTANCE
 #
 # Example:
 #
-#    security-policy-implementation python
-#    verbose-security on
+    security-policy-implementation python
+    verbose-security on
 
 
 # Directive: maximum-number-of-session-objects
@@ -901,7 +901,7 @@ instancehome $INSTANCE
 
 <http-server>
   # valid keys are "address" and "force-connection-close"
-  address 6500
+  address 7500
   # force-connection-close on
 </http-server>
 

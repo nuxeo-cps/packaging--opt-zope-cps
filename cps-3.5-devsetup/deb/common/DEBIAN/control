@@ -1,0 +1,13 @@
+Package: opt-zope-cps-3.5-devsetup
+Version: 1.0-1
+Depends: opt-zope2.9, zope-cps-full-dependencies, python-hgbundler
+Section: devel
+Priority: optional
+Architecture: all
+Essential: no
+Maintainer: Georges Racinet <georges@racinet.fr>
+Homepage: http://cps-cms.org
+Description: utilities to set CPS development environment.
+ Use this convenience package at your own risk, no liability shall be accepted.
+ See also http://www.racinet.fr/index.php?pages/Debian-packages
+
