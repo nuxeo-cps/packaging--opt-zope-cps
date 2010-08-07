@@ -6,5 +6,7 @@ packages
 *~
 *.deb
 *.rpm
-opt/*
 repos/deb
+
+syntax:regexp
+^cps-3.5/.*/opt
