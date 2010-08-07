@@ -35,7 +35,7 @@ print
 print '-'*78
 print 'Compiling python modules'
 try:
-    success = compile_non_test(os.getcwd())
+    success = compile_non_test(sys.argv[1])
     success = True
 except:
     success = False

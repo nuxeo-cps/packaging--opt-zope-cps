@@ -26,13 +26,12 @@ mv CPS-Standard-$cps_version Products
 # dependent
 cp $start_wd/common/mkcpsinstance bin
 chmod 755 bin/mkcpsinstance
+cp $start_wd/common/compilezpy.py bin
 
 # 3.5.1-rc2 specific
 cp $start_wd/common/makecpssite.py Products/CPSDefault/jobs
 cp $start_wd/common/fullupgrade.py Products/CPSDefault/jobs
 
-echo Byte-compiling TODO make this in postint for correct paths in tracebacks
-python2.4 $start_wd/common/compilezpy.py > /dev/null
 echo Copying the instance skeleton
 cd $start_wd
 cp -r $start_wd/common/zope_instance_skel $deb_dir/etc/opt/cps-3.5/zope-skel

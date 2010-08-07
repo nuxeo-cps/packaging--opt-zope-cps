@@ -10,6 +10,8 @@ case "$1" in
   abort-remove)
   ;;
   configure)
+    # Byte compiling
+    python2.4 $CPS_HOME/bin/compilezpy.py $CPS_HOME/Products > /dev/null
     if [ -d $INSTANCE ]; then
 	echo "Found existing instance at $INSTANCE"
 	upscript=$INSTANCE/bin/deb_upgrade

@@ -1,13 +1,18 @@
 #!/bin/sh
 RC_SCRIPT=zope-cps-test
+CPS_HOME=/opt/cps-3.5
 
 case "$1" in
   failed-upgrade)
   ;;
   upgrade|remove|deconfigure)
+     # stop instance
      script=/etc/init.d/$RC_SCRIPT
      if [ -f $script ]; then
        exec $script stop
+
+     # clean byte-compiled files
+     find $CPS_HOME/Products -name '*.pyc' | xargs rm
      fi
   ;;
   *)
