@@ -28,8 +28,7 @@ cp $start_wd/common/mkcpsinstance bin
 chmod 755 bin/mkcpsinstance
 cp $start_wd/common/compilezpy.py bin
 
-# 3.5.1-rc2 specific
-cp $start_wd/common/makecpssite.py Products/CPSDefault/jobs
+# To reinclude in CPS 3.5.2
 cp $start_wd/common/fullupgrade.py Products/CPSDefault/jobs
 
 echo Copying the instance skeleton
