@@ -1,6 +1,6 @@
 Package: opt-zope-cps-3.5-devsetup
-Version: 1.0-1
-Depends: opt-zope2.9, zope-cps-full-dependencies, python-hgbundler
+Version: 1.0-1+squeeze
+Depends: opt-zope2.9, opt-zope-cps-full-dependencies, python-hgbundler
 Section: devel
 Priority: optional
 Architecture: all
