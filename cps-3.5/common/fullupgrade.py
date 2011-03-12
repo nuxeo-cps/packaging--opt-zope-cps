@@ -33,6 +33,16 @@ import transaction
 from Products.CPSUtil import cpsjob
 logger = logging.getLogger('CPSDefault.jobs.fullupgrade')
 
+def upgrade(portal, category='cpsplatform'):
+    stool = portal.portal_setup
+    upgrades = stool.listUpgrades()
+    ids = [up['id'] for up in upgrades]
+    stool.doUpgrades(ids, category, do_commit=True)
+
+    logger.warn("Upgrade steps for category %r done. Portal %r marked as "
+                "upgraded up to %s", category, portal.getId(),
+                '.'.join([str(x) for x in stool._getCurrentVersion(category)]))
+
 def main():
     """CPS job bootstrap"""
 
@@ -47,11 +57,13 @@ def main():
 
     if arguments:
         from_version = arguments[0]
-        logger.info("Starting upgrades from version %s", from_version)
-    else:
-        from_version = ''
-        logger.info("Starting current version upgrades")
-    logger.warn("Fullupgrade not yet supported")
+        logger.info("Starting upgrades. Previous version of package: %r "
+                    "The current upgrade logic is currently independent of "
+                    "that version number, inf favor of the information "
+                    "stored in ZODB (as in portal_setup tool ZMI view)"
+                    "instead.", from_version)
+
+    upgrade(portal)
 
 if __name__ == '__main__':
     main()

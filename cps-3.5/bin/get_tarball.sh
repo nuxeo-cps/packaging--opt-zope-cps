@@ -19,4 +19,4 @@ fi
 echo Checking MD5
 md5sum -c - < $tarball_name.md5
 echo Checking PGP
-gpg --check-sig $tarball_name
+gpg --verify $tarball_name.sig
