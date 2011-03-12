@@ -1,0 +1,18 @@
+Package: opt-zope-cps-3.5
+Version: 3.5.2-1+squeeze
+Depends: opt-zope2.9, opt-zope-cps-full-dependencies
+Section: web
+Priority: optional
+Architecture: all
+Essential: no
+Conflicts: opt-zope-cps-3.5-instance
+Installed-Size: 68612
+Maintainer: Georges Racinet <georges@racinet.fr>
+Homepage: http://cps-cms.org
+Description: The standard set of CPS products
+ This package installs CPS-Standard-x.y.z in /opt,
+ a Zope/CPS instance creation utility (/opt/cps-x.y/bin/mkcpsinstance),
+ and a testing instance in /var/opt.
+ Use this convenience package at your own risk, no liability shall be accepted.
+ See also http://www.racinet.fr/index.php?pages/Debian-packages
+
