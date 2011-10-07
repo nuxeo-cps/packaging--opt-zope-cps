@@ -1,0 +1,10 @@
+Package: opt-zope-cps-3.5-test-dependencies
+Version: 1.0-1
+Depends: xml-core, xmllint, w3c-dtd-xhtml, sgml-base, sgml-data
+Section: devel
+Priority: optional
+Architecture: all
+Essential: no
+Maintainer: Georges Racinet <gracinet@cps-cms.org> 
+Homepage: http://trac.cps-cms.org
+Description: Dependencies to run CPS unit and integration tests
