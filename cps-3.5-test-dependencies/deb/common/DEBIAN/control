@@ -1,5 +1,5 @@
-Package: opt-zope-cps-3.5-test-dependencies
-Version: 1.0-1
+Package: zope-cps-3.5-test-dependencies
+Version: 1.0-2
 Depends: xml-core, xmllint, w3c-dtd-xhtml, sgml-base, sgml-data
 Section: devel
 Priority: optional

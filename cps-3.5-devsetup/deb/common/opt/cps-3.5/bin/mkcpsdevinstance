@@ -33,7 +33,7 @@ REVISION_URL_ARGS = ('tag', 'branch', 'rev')
 
 from optparse import OptionParser
 parser = OptionParser(usage="%prog [options] <target directory>")
-default_bundle = 'https://hg.cps-cms.org/CPS/bundles?subpath=CPS-3-full'
+default_bundle = 'https://hg.cps-cms.org/CPS/bundles?subpath=CPS-3-full&branch=CPS-3.5'
 default_themes = 'Products/CPSDefault/themes'
 parser.add_option('-b', '--bundle-url', dest="bundle_url",
                   default=default_bundle,
