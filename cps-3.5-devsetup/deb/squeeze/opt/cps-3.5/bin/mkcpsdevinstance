@@ -24,7 +24,8 @@ that's why it can't directly be distributed with CPS itself
 import os
 from urlparse import parse_qs
 
-ZOPE_HOME = '/opt/Zope-2.9'
+ZOPE_VERSIONS = ('2.10', '2.9') # first has precedence
+ZOPE_HOME_PATTERN = '/opt/Zope-%s'
 HGBUNDLER_PATH = os.environ['PATH'].split(':')
 HGBUNDLER_PATH.append('/opt/hgbundler/bin')
 ZOPE_CPS_SKEL = '/etc/opt/cps-3.5/zope-dev-skel'
@@ -51,14 +52,34 @@ parser.add_option('-u', '--zope-user_and_pwd', dest="user_and_pwd",
 parser.add_option('--posix-owner', dest="posix_owner", default='',
                  help="Set ownership of the instance on filesystem "
                       "(needed to run as root, typically set to zope:zope)")
+parser.add_option('--zope-version', default='',
+                  help="Specify Zope version to be used "
+                       "(2.9 for CPS 3.5 < 3.5.3, "
+                       "2.9 or 2.10 for CPS >= 3.5.3). Useful only if both "
+                       "are on the system, check contents of /opt")
+
 
 options, args = parser.parse_args()
 if len(args) != 1:
     parser.error("Wrong number or arguments")
+
+zversion = options.zope_version
+if not zversion:
+   for zversion in ZOPE_VERSIONS:
+        zhome = ZOPE_HOME_PATTERN % zversion
+        if os.path.isdir(zhome):
+           break
+   zversion = ZOPE_VERSIONS[0]
+elif not zversion in ZOPE_VERSIONS:
+   parser.error("Zope version must be one of " + ', '.join(ZOPE_VERSIONS))
+else:
+   zhome = ZOPE_HOME_PATTERN % zversion
+
 instance_home = args[0]
 
 os.system('%s/bin/mkzopeinstance.py -d %s -u %s -s %s' % (
-    ZOPE_HOME, instance_home, options.user_and_pwd, ZOPE_CPS_SKEL))
+        zhome, instance_home, options.user_and_pwd, ZOPE_CPS_SKEL))
+
 if options.posix_owner:
     os.system('chown -R %s %s' % (options.posix_owner, instance_home))
 user_id, _ = options.user_and_pwd.split(':')
