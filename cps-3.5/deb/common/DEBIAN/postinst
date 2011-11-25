@@ -3,6 +3,7 @@ ZUSER=zope:zope
 CPS_HOME=/opt/cps-3.5
 INSTANCE=/var/opt/cps-3.5/test-instance
 RC_SCRIPT=zope-cps-test
+PYTHON=python2.4
 
 case "$1" in
   abort-deconfigure|abort-upgrade)
@@ -10,8 +11,14 @@ case "$1" in
   abort-remove)
   ;;
   configure)
+    # some previous versions did not clean .pyc files properly
+    rm -rf $CPS_HOME/Products/Five
+    find $CPS_HOME/Products -name '*.pyc' -delete
+
     # Byte compiling
-    python2.4 $CPS_HOME/bin/compilezpy.py $CPS_HOME/Products > /dev/null
+    $PYTHON $CPS_HOME/bin/compilezpy.py $CPS_HOME/Products > /dev/null
+
+    # Instance upgrade / creation
     if [ -d $INSTANCE ]; then
 	echo "Found existing instance at $INSTANCE"
 	upscript=$INSTANCE/bin/deb_upgrade
@@ -24,10 +31,10 @@ case "$1" in
 	ln -s $CPS_HOME/Products/CPSDefault/themes $INSTANCE/cps-themes
         echo Setting up startup script
         ln -s $INSTANCE/bin/zopectl /etc/init.d/zope-cps-test
-        update-rc.d -f zope-cps-test start 92 2 3 4 5 . stop 92 0 1 6 .
+        update-rc.d -f $RC_SCRIPT start 92 2 3 4 5 . stop 92 0 1 6 .
     fi
     echo "Starting Zope/CPS test instance (listens on port 6500)"
-    /etc/init.d/zope-cps-test start
+    /etc/init.d/$RC_SCRIPT start
 
     ;;
 

@@ -18,7 +18,7 @@ find $deb_dir/DEBIAN -type f -executable | xargs chmod 755
 
 cd $deb_dir/opt/cps-3.5
 echo Unpacking the tarball
-tar xzf $start_wd/tarballs/CPS-Standard-$cps_version.tgz
+tar xjf $start_wd/tarballs/CPS-Standard-$cps_version.tbz
 mv CPS-Standard-$cps_version Products
 
 # instance creation script (cannot be in the product itself, because

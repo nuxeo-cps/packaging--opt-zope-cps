@@ -1,6 +1,7 @@
 Package: zope-cps-3.5-test-dependencies
-Version: 1.0-3
-Depends: xml-core, xmllint|libxml2-utils, w3c-dtd-xhtml, sgml-base, sgml-data
+Version: 1.1-1
+Depends: xml-core, xmllint|libxml2-utils, w3c-dtd-xhtml, sgml-base, sgml-data,
+ default-jre-headless
 Section: devel
 Priority: optional
 Architecture: all

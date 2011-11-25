@@ -17,39 +17,25 @@
 # $Id$
 """Upgrade a CPS Site.
 
-This applies all relevant upgrade steps and doesn't replay any profile by
-default.
-Note that upgrade steps can themselves alter the configuration of technical
-objects.
-
-With no argument, this will replay the upgrade steps whose target is the current
-version (useful for RC process, in-between versions upgrades etc.)
+Relays to the standard cpsupgrade job
+This is kept for two reasons:
+  - name differs, existing instances will still call the old one ;
+  - potential for debian version number usage
 """
 
 import logging
-import sys
-
-import transaction
 from Products.CPSUtil import cpsjob
+from Products.CPSDefault.jobs.cpsupgrade import Upgrader
+
 logger = logging.getLogger('CPSDefault.jobs.fullupgrade')
 
-def upgrade(portal, category='cpsplatform'):
-    stool = portal.portal_setup
-    upgrades = stool.listUpgrades()
-    ids = [up['id'] for up in upgrades]
-    stool.doUpgrades(ids, category, do_commit=True)
-
-    logger.warn("Upgrade steps for category %r done. Portal %r marked as "
-                "upgraded up to %s", category, portal.getId(),
-                '.'.join([str(x) for x in stool._getCurrentVersion(category)]))
+def upgrade(portal):
+    Upgrader(portal, None).apply_all_steps()
 
 def main():
     """CPS job bootstrap"""
 
     optparser = cpsjob.optparser
-    optparser.add_option('-m', '--replay-meta-profiles', dest='meta_profiles',
-                         action='store_true',
-                         help="Replay meta profiles first")
     optparser.add_option('--debian-version-scheme', dest='debian_versions',
                          action='store_true',
                          help="use debian package version scheme")
@@ -59,9 +45,9 @@ def main():
         from_version = arguments[0]
         logger.info("Starting upgrades. Previous version of package: %r "
                     "The current upgrade logic is currently independent of "
-                    "that version number, inf favor of the information "
-                    "stored in ZODB (as in portal_setup tool ZMI view)"
-                    "instead.", from_version)
+                    "that version number, in favor of the information "
+                    "stored in ZODB (as in portal_setup tool ZMI view).",
+                    from_version)
 
     upgrade(portal)
 

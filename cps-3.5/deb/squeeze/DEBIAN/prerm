@@ -9,14 +9,13 @@ case "$1" in
      # stop instance
      script=/etc/init.d/$RC_SCRIPT
      if [ -f $script ]; then
-       exec $script stop
-
-     # clean byte-compiled files
-     find $CPS_HOME/Products -name '*.pyc' | xargs rm
+       $script stop
      fi
+     # clean byte-compiled files
+     find $CPS_HOME/Products -name '*.pyc' -delete 
   ;;
   *)
-    echo "prerm called with unknown argument \`$1'" >&2
+    echo "prerm called with unknown argument \'$1\'" >&2
     exit 1
     ;;
 esac
