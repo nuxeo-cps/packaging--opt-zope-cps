@@ -1,0 +1,21 @@
+#!/bin/sh
+ZUSER=zope:zope
+CPS_HOME=/opt/cps-3.5
+INSTANCE=/var/opt/cps-3.5/test-instance
+RC_SCRIPT=zope-cps-test
+
+case "$1" in
+  abort-deconfigure|abort-upgrade)
+    ;;
+  abort-remove)
+  ;;
+  configure)
+    echo "Now do '/opt/cps-3.6/bin/mkcpsdevinstance --help' to get started."
+    ;;
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+    ;;
+esac
+

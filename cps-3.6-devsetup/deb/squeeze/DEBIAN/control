@@ -1,0 +1,14 @@
+Package: opt-zope-cps-3.6-devsetup
+Version: 1.0-4+squeeze
+Depends: opt-zope2.10, opt-zope-cmf, opt-zope-cps-full-dependencies,
+ opt-hgbundler, zope-cps-3.5-test-dependencies
+Section: devel
+Priority: optional
+Architecture: all
+Essential: no
+Maintainer: Georges Racinet <gracinet@cps-cms.org>
+Homepage: http://cps-cms.org
+Description: utilities to set CPS development environment, version 3.6.
+ Use this convenience package at your own risk, no liability shall be accepted.
+ See also http://www.racinet.fr/index.php?pages/Debian-packages
+

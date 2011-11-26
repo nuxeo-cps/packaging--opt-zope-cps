@@ -1,0 +1,10 @@
+#! /bin/sh
+# deb_upgrade : performs upgrades with debian version schemes as arguments
+# This is a bootstrap. If you alter the test instance a lot, you may want
+# to change its version of this script
+
+INSTANCE_HOME="<<INSTANCE_HOME>>"
+CPS_HOME=/opt/cps-3.5
+ZOPECTL=$INSTANCE_HOME/bin/zopectl
+
+exec $ZOPECTL run $CPS_HOME/Products/CPSDefault/jobs/fullupgrade.py -u admin --debian-version-scheme cps "$@"
