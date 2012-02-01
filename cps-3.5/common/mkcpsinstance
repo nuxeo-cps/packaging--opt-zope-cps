@@ -21,6 +21,7 @@
 This script relies on the knowledge of the Zope home,
 that's why it can't directly be distributed with CPS itself
 """
+CPS_HOME='/opt/cps-3.5'
 ZOPE_VERSIONS = ('2.10', '2.9') # first has precedence
 ZOPE_HOME_PATTERN = '/opt/Zope-%s'
 ZOPE_CPS_SKEL = '/etc/opt/cps-3.5/zope-skel'

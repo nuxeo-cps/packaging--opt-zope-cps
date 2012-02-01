@@ -22,9 +22,10 @@ This script relies on the knowledge of the Zope home,
 that's why it can't directly be distributed with CPS itself
 """
 import os
+import sys
 from urlparse import parse_qs
 
-ZOPE_VERSIONS = ('2.10', ) # first has precedence
+ZOPE_VERSIONS = ('2.10',) # first has precedence
 ZOPE_HOME_PATTERN = '/opt/Zope-%s'
 HGBUNDLER_PATH = os.environ['PATH'].split(':')
 HGBUNDLER_PATH.append('/opt/hgbundler/bin')
@@ -34,7 +35,7 @@ REVISION_URL_ARGS = ('tag', 'branch', 'rev')
 
 from optparse import OptionParser
 parser = OptionParser(usage="%prog [options] <target directory>")
-default_bundle = 'https://hg.cps-cms.org/CPS/bundles?subpath=CPS-3-base'
+default_bundle = 'https://hg.cps-cms.org/CPS/bundles?subpath=CPS-3-full'
 default_themes = 'Products/CPSDefault/themes'
 parser.add_option('-b', '--bundle-url', dest="bundle_url",
                   default=default_bundle,
@@ -52,12 +53,22 @@ parser.add_option('-u', '--zope-user_and_pwd', dest="user_and_pwd",
 parser.add_option('--posix-owner', dest="posix_owner", default='',
                  help="Set ownership of the instance on filesystem "
                       "(needed to run as root, typically set to zope:zope)")
+parser.add_option('--zope-version', default='',
+                  help="Specify Zope version to be used "
+                       "(2.10 is currently the only viable for CPS >= 3.6.0)."
+                 )
+parser.add_option('--no-portal', action='store_true',
+                  help="Create the Zope instance with correct products, but "
+                  "does not create the portal.")
+parser.add_option('--skip-existing', action='store_true',
+                  help="With this option, nothing happens if a directory of "
+                  "the same name exists.")
 
 options, args = parser.parse_args()
 if len(args) != 1:
     parser.error("Wrong number or arguments")
 
-zversion = getattr(options, 'zope_version', None)
+zversion = options.zope_version
 if not zversion:
    for zversion in ZOPE_VERSIONS:
         zhome = ZOPE_HOME_PATTERN % zversion
@@ -70,6 +81,14 @@ else:
    zhome = ZOPE_HOME_PATTERN % zversion
 
 instance_home = args[0]
+
+if os.path.exists(instance_home):
+    if options.skip_existing:
+        print "%r already existing. Skipping" % instance_home
+        sys.exit(0)
+    else:
+        print "Error: %r already existing." % instance_home
+        sys.exit(2)
 
 os.system('%s/bin/mkzopeinstance.py -d %s -u %s -s %s' % (
         zhome, instance_home, options.user_and_pwd, ZOPE_CPS_SKEL))
@@ -125,6 +144,9 @@ for revkey in REVISION_URL_ARGS: # garanteed that only one is present
     os.system('cd %s; hg update %s' % (repodir, rev))
 
 os.system('%s --bundle-dir=%s make-clones' % (hgbundler, products_dir))
+if options.no_portal:
+    print "Zope instance ready. You requested not to create a portal."
+    sys.exit(0)
 
 cmd = '%s/bin/zopectl run %s/%s -u %s cps ' % (
     instance_home, instance_home, SITE_CREATE_JOB, user_id)
