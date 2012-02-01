@@ -1,5 +1,5 @@
 Package: opt-zope-cps-3.6-devsetup
-Version: 1.0-4+squeeze
+Version: 1.1-1+squeeze
 Depends: opt-zope2.10, opt-zope-cmf, opt-zope-cps-full-dependencies,
  opt-hgbundler, zope-cps-3.5-test-dependencies
 Section: devel
