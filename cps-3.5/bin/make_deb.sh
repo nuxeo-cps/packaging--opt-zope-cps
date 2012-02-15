@@ -1,3 +1,4 @@
+#!/usr/bin/fakeroot /bin/sh
 # Make a .deb package by expanding the CPS tarball in it
 # arguments: the directory to use, e.g, debian/lenny or ubuntu/hardy
 if [ -z "$1" ]; then
@@ -39,11 +40,6 @@ cp -r $start_wd/common/zope_instance_skel $deb_dir/etc/opt/cps-3.5/zope-skel
 echo "Producing the .deb (version $deb_version)"
 
 chmod -R a+r $deb_dir
-sudo chown -R root:root $deb_dir/*
 mkdir -p packages/$1
 sudo dpkg -b $deb_dir packages/$1/current.deb
-
-# getting back to normal ownership so that cleaning does not mean
-# playing with rm -r as root
-sudo chown -R $user_id:$user_grp $deb_dir/*
 
