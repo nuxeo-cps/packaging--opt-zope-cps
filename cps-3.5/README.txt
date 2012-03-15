@@ -14,11 +14,13 @@ Commands
 All commands are meant to be launched from the directory where this
 README lies:
 
-bin/build.sh             builds everything (calls sudo)
+bin/build.sh             builds everything (calls sudo) (deprecated)
 bin/get_tarball.sh       retrieve the current CPS tarball
-bin/make_deb.sh <dir>    create the .deb for skeleton at <dir> (calls sudo)
-                         example: bin/make_deb.sh debian/lenny
+bin/make_deb.sh <dir>    create the .deb for skeleton at <dir> (deprecated)
+                         example: bin/make_deb.sh debian/lenny 
 bin/clean.sh <dir>       cleans intermediate files generated during the
                          release process for <dir>
-
+bin/products2deb.py      build a .deb from package skeleton and sources
+          		 run with --help for options
+ 
 
