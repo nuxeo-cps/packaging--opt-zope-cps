@@ -59,7 +59,7 @@ class DebianBuilder(object):
 
     def build(self):
         self.read_version()
-        call('mkdir', '-p', options.sandbox_dir, shell=True)
+        call(['mkdir', '-p', options.sandbox_dir], shell=True)
 
         self.build_dir = os.path.join(options.sandbox_dir, self.version_str)
 
