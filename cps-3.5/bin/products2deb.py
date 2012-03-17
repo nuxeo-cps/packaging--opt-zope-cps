@@ -6,7 +6,8 @@ from optparse import OptionParser
 
 optparser = OptionParser()
 optparser.add_option('--source-dir', help="Source directory for CPS Products")
-optparser.add_option('--dest-dir', help="Directory to store the produced .deb")
+optparser.add_option('--dest-dir', help="Directory to store the produced .deb",
+                     default='.')
 optparser.add_option('--pkg-skeleton',
                      help="Directory holding the package skeleton, "
                      "including control files.")
@@ -66,7 +67,8 @@ class DebianBuilder(object):
         self.clean() 
         self.do_copies()
         self.update_control()
-        call('dpkg -b %s opt-zope-cps-3.5_%s_all.deb' % (self.build_dir, self.deb_version), shell=True)
+        call('dpkg -b %s %s/opt-zope-cps-3.5_%s_all.deb' % (
+		self.build_dir, self.dest_dir, self.deb_version), shell=True)
 
 
 if __name__ == '__main__':
