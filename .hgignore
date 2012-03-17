@@ -9,4 +9,4 @@ packages
 repos/deb
 
 syntax:regexp
-^cps-3.5/.*/opt
+^cps-3.5/deb/\w*/opt
