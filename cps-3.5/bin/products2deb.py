@@ -53,12 +53,17 @@ class DebianBuilder(object):
                                      'cps-%s' % self.major_version, 'Products')
         shutil.copytree(self.source_dir, products_dest, symlinks=True)
 
+    def clean(self):
+	if os.path.exists(self.build_dir):
+            shutil.rmtree(self.build_dir)
+
     def build(self):
         self.read_version()
+        call('mkdir', '-p', options.sandbox_dir, shell=True)
 
         self.build_dir = os.path.join(options.sandbox_dir, self.version_str)
 
-        shutil.rmtree(self.build_dir)
+        self.clean() 
         self.do_copies()
         self.update_control()
         call('dpkg -b %s opt-zope-cps-3.5_%s_all.deb' % (self.build_dir, self.deb_version), shell=True)
