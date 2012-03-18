@@ -7,4 +7,4 @@ INSTANCE_HOME="<<INSTANCE_HOME>>"
 CPS_HOME=/opt/cps-3.5
 ZOPECTL=$INSTANCE_HOME/bin/zopectl
 
-exec $ZOPECTL run $CPS_HOME/Products/CPSDefault/jobs/fullupgrade.py -u admin --debian-version-scheme cps "$@"
+exec $ZOPECTL run $CPS_HOME/Products/CPSDefault/jobs/cpsupgrade.py -u admin cps
