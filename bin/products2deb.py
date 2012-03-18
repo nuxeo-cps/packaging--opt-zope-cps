@@ -11,6 +11,9 @@ optparser.add_option('--dest-dir', help="Directory to store the produced .deb",
 optparser.add_option('--pkg-skeleton',
                      help="Directory holding the package skeleton, "
                      "including control files.")
+optparser.add_option('--pkg-revision',
+                     help="Package revision number itself (default 1)",
+                     default='1')
 optparser.add_option('--sandbox-dir', help="Where to build the package itself.")
 
 class DebianBuilder(object):
@@ -28,7 +31,7 @@ class DebianBuilder(object):
         assert vstring.startswith('CPS-')
         self.version_str = vstring[4:]
         self.version = tuple(int(i) for i in self.version_str.split('.'))
-	assert self.version > (3, 5, 2)
+#NOCOMMIT	assert self.version > (3, 5, 2)
         self.major_version = '.'.join((str(i) for i in self.version[:2]))
 
     def update_control(self):
@@ -41,7 +44,7 @@ class DebianBuilder(object):
         prefix = 'Version: '
         for i, line in enumerate(lines):
             if line.startswith(prefix):
-                line = line % self.version_str
+                line = line % (self.version_str, self.pkg_revision)
                 lines[i] = line
                 self.deb_version = line[len(prefix):].strip()
 
@@ -65,7 +68,7 @@ class DebianBuilder(object):
 
         self.build_dir = os.path.join(options.sandbox_dir, self.version_str)
 
-        self.clean() 
+        self.clean()
         self.do_copies()
         self.update_control()
         call('dpkg -b %s %s/opt-zope-cps-3.5_%s_all.deb' % (

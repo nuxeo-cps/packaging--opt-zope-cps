@@ -1,5 +1,5 @@
 Package: opt-zope-cps-3.5
-Version: %s-1
+Version: %s-%s
 Depends: opt-zope2.9|opt-zope2.10, zope-cps-full-dependencies
 Section: web
 Priority: optional
