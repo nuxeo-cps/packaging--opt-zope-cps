@@ -31,7 +31,7 @@ class DebianBuilder(object):
         assert vstring.startswith('CPS-')
         self.version_str = vstring[4:]
         self.version = tuple(int(i) for i in self.version_str.split('.'))
-#NOCOMMIT	assert self.version > (3, 5, 2)
+        assert self.version > (3, 5, 2)
         self.major_version = '.'.join((str(i) for i in self.version[:2]))
 
     def update_control(self):
